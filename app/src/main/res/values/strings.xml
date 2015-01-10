@@ -1,0 +1,29 @@
+<resources>
+
+    <string name="app_name">SimpleBattWidget</string>
+    <string name="app_version">ver1.0</string>
+    <string name="title_activity_main">SimpleBattWidget</string>
+    <string name="none">-</string>
+    <string name="show_usage">Show usage</string>
+    <string name="flash_log">Flash log</string>
+    <string name="settings">Settings</string>
+
+    <string name="notif_high_voltage">Battery high voltage</string>
+    <string name="notif_low_voltage">Battery low voltage</string>
+    <string name="notif_battery_drain">Battery drain</string>
+
+    <string name="category_batt_voltage">Voltage settings</string>
+    <string name="dialog_title_max_voltage">Max voltage (equals to 100%)</string>
+    <string name="title_max_voltage">Max voltage</string>
+    <string name="title_warning_high_voltage">Warning high voltage</string>
+    <string name="title_warning_low_voltage">Warning low voltage</string>
+    <string name="dialog_title_min_voltage">Min voltage (equals to 0%)</string>
+    <string name="title_min_voltage">Min voltage</string>
+
+    <string name="category_rate">Rate settings</string>
+    <string name="title_drain_rate">Drain rate [%/h]</string>
+    <string name="summary_drain_rate">Battery drain rate, coloring red.</string>
+    <string name="title_warn_rate">Warning rate [%/h]</string>
+    <string name="summary_warn_rate">Battery warning rate, coloring orange.</string>
+
+</resources>

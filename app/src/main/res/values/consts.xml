@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key_max_voltage">max_voltage</string>
+    <string name="key_warning_high_voltage">warning_high_voltage</string>
+    <string name="key_warning_low_voltage">warning_low_voltage</string>
+    <string name="key_min_voltage">min_voltage</string>
+
+    <string name="dv_max_voltage">4150</string>
+    <string name="dv_warning_high_voltage">4030</string>
+    <string name="dv_warning_low_voltage">3670</string>
+    <string name="dv_min_voltage">3550</string>
+
+    <string name="dv_drain_rate">-8</string>
+    <string name="dv_warn_rate">-4</string>
+</resources>

@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+apply from: 'D:/android/app/signkey/keyInfo.gradle'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "net.afnf.and.simplebattwidget"
+        minSdkVersion 8
+        targetSdkVersion 21
+        versionCode 1
+        versionName "0.1.1"
+        testInstrumentationRunner "net.afnf.and.simplebattwidget.MyInstrumentationTestRunner"
+    }
+
+    signingConfigs {
+        myKeyConfig {
+            storeFile file(keyInfo_storeFile)
+            storePassword keyInfo_storePassword
+            keyAlias keyInfo_keyAlias
+            keyPassword keyInfo_keyPassword
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.myKeyConfig
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.myKeyConfig
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+}

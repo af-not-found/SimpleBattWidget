@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/category_batt_voltage">
+
+        <EditTextPreference
+            android:defaultValue="@string/dv_max_voltage"
+            android:dialogTitle="@string/dialog_title_max_voltage"
+            android:inputType="number"
+            android:key="@string/key_max_voltage"
+            android:maxLength="4"
+            android:title="@string/title_max_voltage"/>
+
+        <EditTextPreference
+            android:defaultValue="@string/dv_warning_high_voltage"
+            android:inputType="number"
+            android:key="@string/key_warning_high_voltage"
+            android:maxLength="4"
+            android:title="@string/title_warning_high_voltage"/>
+
+        <EditTextPreference
+            android:defaultValue="@string/dv_warning_low_voltage"
+            android:inputType="number"
+            android:key="@string/key_warning_low_voltage"
+            android:maxLength="4"
+            android:title="@string/title_warning_low_voltage"/>
+
+        <EditTextPreference
+            android:defaultValue="@string/dv_min_voltage"
+            android:dialogTitle="@string/dialog_title_min_voltage"
+            android:inputType="number"
+            android:key="@string/key_min_voltage"
+            android:maxLength="4"
+            android:title="@string/title_min_voltage"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/category_rate">
+
+        <EditTextPreference
+            android:defaultValue="@string/dv_drain_rate"
+            android:inputType="number"
+            android:key="key_drain_rate"
+            android:maxLength="2"
+            android:summary="@string/summary_drain_rate"
+            android:title="@string/title_drain_rate"/>
+
+        <EditTextPreference
+            android:defaultValue="@string/dv_warn_rate"
+            android:inputType="number"
+            android:key="key_warn_rate"
+            android:maxLength="2"
+            android:summary="@string/summary_warn_rate"
+            android:title="@string/title_warn_rate"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

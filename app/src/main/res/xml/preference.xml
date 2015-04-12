@@ -39,17 +39,17 @@
 
         <EditTextPreference
             android:defaultValue="@string/dv_drain_rate"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:key="key_drain_rate"
-            android:maxLength="2"
+            android:maxLength="3"
             android:summary="@string/summary_drain_rate"
             android:title="@string/title_drain_rate"/>
 
         <EditTextPreference
             android:defaultValue="@string/dv_warn_rate"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:key="key_warn_rate"
-            android:maxLength="2"
+            android:maxLength="3"
             android:summary="@string/summary_warn_rate"
             android:title="@string/title_warn_rate"/>
 

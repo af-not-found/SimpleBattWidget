@@ -1,0 +1,28 @@
+<resources>
+
+    <string name="app_name">SimpleBattWidget</string>
+    <string name="title_activity_main">SimpleBattWidget</string>
+    <string name="none">-</string>
+    <string name="show_usage">使用状況</string>
+    <string name="flash_log">ログ書き出し</string>
+    <string name="settings">設定</string>
+
+    <string name="notif_high_voltage">バッテリー電圧上昇</string>
+    <string name="notif_low_voltage">バッテリー電圧降下</string>
+    <string name="notif_battery_drain">バッテリードレイン</string>
+
+    <string name="category_batt_voltage">電圧設定</string>
+    <string name="dialog_title_max_voltage">最大電圧 (100%に相当)</string>
+    <string name="title_max_voltage">最大電圧</string>
+    <string name="title_warning_high_voltage">上昇時の警告電圧</string>
+    <string name="title_warning_low_voltage">降下時の警告電圧</string>
+    <string name="dialog_title_min_voltage">最小電圧 (0%に相当)</string>
+    <string name="title_min_voltage">最小電圧</string>
+
+    <string name="category_rate">レート設定</string>
+    <string name="title_drain_rate">バッテリードレインレート[%/h]</string>
+    <string name="summary_drain_rate">赤文字。0以上を設定すると無効にできます。</string>
+    <string name="title_warn_rate">バッテリー警告レート[%/h]</string>
+    <string name="summary_warn_rate">橙文字。0以上を設定すると無効にできます。</string>
+
+</resources>

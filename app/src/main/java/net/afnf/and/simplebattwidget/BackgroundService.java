@@ -27,9 +27,9 @@ public class BackgroundService extends Service {
     protected NotificationCompat.Builder notificationBuilder;
     protected int averageVoltage = 0;
     protected int voltage = 0;
-    protected int calcedLevel = 0;
-    protected int level = 0;
-    protected int temperature = 0;
+    protected int calcedLevel = -1;
+    protected int level = -1;
+    protected int temperature = -100;
     protected boolean charging = false;
     protected long lastBattUpdate = 0;
     protected long lastLog = 0;
@@ -156,9 +156,9 @@ public class BackgroundService extends Service {
         notificationBuilder = null;
         averageVoltage = 0;
         voltage = 0;
-        calcedLevel = 0;
-        level = 0;
-        temperature = 0;
+        calcedLevel = -1;
+        level = -1;
+        temperature = -100;
         charging = false;
         lastLog = 0;
         usage = 0;
@@ -645,7 +645,7 @@ public class BackgroundService extends Service {
     }
 
     public String getLevelStr() {
-        if (getCalcedLevel() != 0) {
+        if (getCalcedLevel() >= 0) {
             return getCalcedLevel() + "/" + level;
         }
         else {
@@ -654,8 +654,8 @@ public class BackgroundService extends Service {
     }
 
     public String getVoltageStrForActivity() {
-        if (getAverageVoltage() != 0) {
-            return getAverageVoltage() + "mv (raw=" + voltage + ")";
+        if (getAverageVoltage() >= 0) {
+            return getAverageVoltage() + getVoltageSuffix() + " (raw=" + voltage + ")";
         }
         else {
             return getString(R.string.none);
@@ -663,7 +663,7 @@ public class BackgroundService extends Service {
     }
 
     public String getLevelStrForActivity() {
-        if (getCalcedLevel() != 0) {
+        if (getCalcedLevel() >= 0) {
             return getCalcedLevel() + "% (raw=" + level + ")";
         }
         else {
@@ -671,21 +671,22 @@ public class BackgroundService extends Service {
         }
     }
 
-    public String getVoltageStr() {
-
-        String suffix = "mv";
-
+    public String getVoltageSuffix() {
         // 前回の更新から15分以上経っていれば、語尾を"?"に変更
-        if (System.currentTimeMillis() - lastBattUpdate > 15 * 60 * 1000 || getAverageVoltage() <= 0) {
+        String suffix = "mv";
+        if (System.currentTimeMillis() - lastBattUpdate > 15 * 60 * 1000) {
             suffix = "mv?";
         }
+        return suffix;
+    }
 
-        return getAverageVoltage() + suffix;
+    public String getVoltageStr() {
+        return getAverageVoltage() + getVoltageSuffix();
     }
 
     @SuppressLint("DefaultLocale")
     public String getTemperatureStr() {
-        if (getTemperature() != 0) {
+        if (getTemperature() > -100) {
             return String.format("%.1f℃", ((double) getTemperature()) / 10);
         }
         else {

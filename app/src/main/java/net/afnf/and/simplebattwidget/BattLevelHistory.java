@@ -114,13 +114,13 @@ public class BattLevelHistory {
 
         int dr = Const.getBatteryDrainRate(context);
         int wr = Const.getBatteryWaringRate(context);
-        if (prev0 <= dr && prev1 <= dr && prev2 <= dr) {
+        if (dr < 0 && prev0 <= dr && prev1 <= dr && prev2 <= dr) {
             color_id = R.color.fast;
         }
-        else if (prev0 <= wr && prev1 <= wr && prev2 <= wr) {
+        else if (wr < 0 && prev0 <= wr && prev1 <= wr && prev2 <= wr) {
             color_id = R.color.mid;
         }
-        else if (prev1 <= wr || prev2 <= wr) {
+        else if (wr < 0 && (prev1 <= wr || prev2 <= wr)) {
             color_id = R.color.slow;
         }
         return color_id;
@@ -128,9 +128,17 @@ public class BattLevelHistory {
 
     @SuppressLint("DefaultLocale")
     protected String convertValueToUsageStr(float this_usage) {
-        String s = String.format("%+.1f%%/h", this_usage);
+        String fmt = null;
+        if (this_usage == 0) {
+            fmt = "%.1f%%/h";
+        }
+        else {
+            fmt = "%+.1f%%/h";
+        }
+        String s = String.format(fmt, this_usage);
         int len = s.length();
         s = "     ".substring(0, (8 - len)) + s;
         return s;
+
     }
 }

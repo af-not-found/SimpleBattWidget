@@ -8,10 +8,10 @@ public class BattLevelHistoryTest extends DexmakerInstrumentationTestCase {
     public void testConvertValueToUsageStr() {
         BattLevelHistory blh = new BattLevelHistory();
 
-        assertEquals(" +0.0%/h", blh.convertValueToUsageStr(0.0f));
+        assertEquals("  0.0%/h", blh.convertValueToUsageStr(0.0f));
         assertEquals(" +1.2%/h", blh.convertValueToUsageStr(1.23f));
         assertEquals("+12.3%/h", blh.convertValueToUsageStr(12.3f));
-        assertEquals(" -0.0%/h", blh.convertValueToUsageStr(-0.0f));
+        assertEquals("  0.0%/h", blh.convertValueToUsageStr(-0.0f));
         assertEquals(" -1.2%/h", blh.convertValueToUsageStr(-1.23f));
         assertEquals("-12.3%/h", blh.convertValueToUsageStr(-12.3f));
     }
@@ -109,11 +109,11 @@ public class BattLevelHistoryTest extends DexmakerInstrumentationTestCase {
         assertEquals(+0.0f, blh.calcUsage(5));
 
         String str = blh.toString();
-        assertEquals("686@76,74,75,78,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,", str);
+        assertEquals("674@76,74,75,78,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,", str);
         blh = new BattLevelHistory();
         blh.fromString(str);
         str = blh.toString();
-        assertEquals("686@76,74,75,78,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,", str);
+        assertEquals("674@76,74,75,78,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,", str);
     }
 
     public void testUpdateHistory2() {
@@ -175,10 +175,10 @@ public class BattLevelHistoryTest extends DexmakerInstrumentationTestCase {
         assertEquals(+0.0f, blh.calcUsage(9));
 
         String str = blh.toString();
-        assertEquals("690@76,78,78,78,78,78,78,80,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,", str);
+        assertEquals("678@76,78,78,78,78,78,78,80,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,", str);
         blh = new BattLevelHistory();
         blh.fromString(str);
         str = blh.toString();
-        assertEquals("690@76,78,78,78,78,78,78,80,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,", str);
+        assertEquals("678@76,78,78,78,78,78,78,80,80,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,", str);
     }
 }

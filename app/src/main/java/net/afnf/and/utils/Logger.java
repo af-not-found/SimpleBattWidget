@@ -25,15 +25,21 @@ import java.util.zip.ZipOutputStream;
 public class Logger {
 
     private static final int BUF_SIZE = 1000;
+    private static final long OLD_LOG_DEL_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000; // 7日
+    
+    private static boolean enableLogging = true;
+    private static int index = 0;
     private static byte[] levels = new byte[BUF_SIZE];
     private static long[] times = new long[BUF_SIZE];
     private static String[] contents = new String[BUF_SIZE];
-    private static final long OLD_LOG_DEL_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000; // 7日
-    private static final String[] LEVEL_STR = {"V", "D", "I", "W", "E"};
-    private static boolean enableLogging = true;
-    private static int index = 0;
     private static byte[] FILE_SEPARATER = "\n-----------------------------------------------------------------\n".getBytes();
 
+    private static enum LEVEL {
+        VERBOSE, DEBUG, INFO, WARN, ERROR;
+    }
+    
+    private static final String[] LEVEL_STR = {"V", "D", "I", "W", "E"};
+    
     public static void v(String s) {
         log(LEVEL.VERBOSE, s, null);
     }
@@ -270,17 +276,18 @@ public class Logger {
         Logger.enableLogging = enabled;
     }
 
-    private static enum LEVEL {
-        VERBOSE, DEBUG, INFO, WARN, ERROR;
-    }
-
     static class FlushThread extends Thread {
+        int len = index;
+        byte[] old_levels = levels;
+        long[] old_times = times;
+        String[] old_contents = contents;
+        
         public FlushThread(int len, byte[] old_levels, long[] old_times, String[] old_contents) {
             this.len = len;
             this.old_levels = old_levels;
             this.old_times = old_times;
             this.old_contents = old_contents;
-        }        int len = index;
+        }
 
         @Override
         @SuppressLint("SimpleDateFormat")
@@ -338,12 +345,6 @@ public class Logger {
             }
 
             Log.i(Const.LOGTAG, "logging time : " + (System.currentTimeMillis() - start) + "ms");
-        }        byte[] old_levels = levels;
-        long[] old_times = times;
-        String[] old_contents = contents;
-
-
-
-
+        }
     }
 }

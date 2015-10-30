@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-apply from: 'D:/android/app/signkey/keyInfo.gradle'
+apply from: 'f:/android/app/signkey/keyInfo.gradle'
 
 android {
     compileSdkVersion 21

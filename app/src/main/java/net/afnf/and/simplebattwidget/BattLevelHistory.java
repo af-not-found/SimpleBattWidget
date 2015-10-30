@@ -129,8 +129,9 @@ public class BattLevelHistory {
     @SuppressLint("DefaultLocale")
     protected String convertValueToUsageStr(float this_usage) {
         String fmt = null;
-        if (this_usage == 0) {
+        if ((int) this_usage == 0) {
             fmt = "%.1f%%/h";
+            this_usage = +0.0f;
         }
         else {
             fmt = "%+.1f%%/h";

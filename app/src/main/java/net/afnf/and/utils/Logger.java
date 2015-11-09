@@ -26,8 +26,8 @@ public class Logger {
 
     private static final int BUF_SIZE = 1000;
     private static final long OLD_LOG_DEL_THRESHOLD_MS = 7 * 24 * 60 * 60 * 1000; // 7日
-    
-    private static boolean enableLogging = true;
+
+    private static boolean enableLogging = false;
     private static int index = 0;
     private static byte[] levels = new byte[BUF_SIZE];
     private static long[] times = new long[BUF_SIZE];
@@ -37,9 +37,9 @@ public class Logger {
     private static enum LEVEL {
         VERBOSE, DEBUG, INFO, WARN, ERROR;
     }
-    
+
     private static final String[] LEVEL_STR = {"V", "D", "I", "W", "E"};
-    
+
     public static void v(String s) {
         log(LEVEL.VERBOSE, s, null);
     }
@@ -69,37 +69,35 @@ public class Logger {
             return;
         }
 
-        if (BuildConfig.DEBUG) {
-            switch (level) {
-                case VERBOSE:
-                    Log.v(Const.LOGTAG, s, t);
-                    break;
-                case DEBUG:
-                    Log.d(Const.LOGTAG, s, t);
-                    break;
-                case INFO:
-                    Log.i(Const.LOGTAG, s, t);
-                    break;
-                case WARN:
-                    Log.w(Const.LOGTAG, s, t);
-                    break;
-                case ERROR:
-                    Log.e(Const.LOGTAG, s, t);
-                    break;
+        switch (level) {
+            case VERBOSE:
+                Log.v(Const.LOGTAG, s, t);
+                break;
+            case DEBUG:
+                Log.d(Const.LOGTAG, s, t);
+                break;
+            case INFO:
+                Log.i(Const.LOGTAG, s, t);
+                break;
+            case WARN:
+                Log.w(Const.LOGTAG, s, t);
+                break;
+            case ERROR:
+                Log.e(Const.LOGTAG, s, t);
+                break;
+        }
+
+        synchronized (Logger.class) {
+            if (t != null) {
+                s += "\n" + Log.getStackTraceString(t);
             }
+            times[index] = System.currentTimeMillis();
+            contents[index] = s;
+            levels[index] = (byte) level.ordinal();
 
-            synchronized (Logger.class) {
-                if (t != null) {
-                    s += "\n" + Log.getStackTraceString(t);
-                }
-                times[index] = System.currentTimeMillis();
-                contents[index] = s;
-                levels[index] = (byte) level.ordinal();
-
-                index++;
-                if (index >= BUF_SIZE) {
-                    startFlushThread(false);
-                }
+            index++;
+            if (index >= BUF_SIZE) {
+                startFlushThread(false);
             }
         }
     }
@@ -211,20 +209,8 @@ public class Logger {
             throw e;
         }
         finally {
-            if (is != null) {
-                try {
-                    is.close();
-                }
-                catch (IOException e) {
-                }
-            }
-            if (zos != null) {
-                try {
-                    zos.close();
-                }
-                catch (IOException e) {
-                }
-            }
+            AndroidUtils.closeQuietly(is);
+            AndroidUtils.closeQuietly(zos);
         }
 
         // 圧縮に成功したら削除
@@ -242,6 +228,9 @@ public class Logger {
     }
 
     public static void startDeleteOldFileThread() {
+        if (enableLogging == false) {
+            return;
+        }
 
         new Thread(new Runnable() {
 
@@ -281,7 +270,7 @@ public class Logger {
         byte[] old_levels = levels;
         long[] old_times = times;
         String[] old_contents = contents;
-        
+
         public FlushThread(int len, byte[] old_levels, long[] old_times, String[] old_contents) {
             this.len = len;
             this.old_levels = old_levels;
@@ -292,6 +281,9 @@ public class Logger {
         @Override
         @SuppressLint("SimpleDateFormat")
         public void run() {
+            if (enableLogging == false) {
+                return;
+            }
 
             long start = System.currentTimeMillis();
 
@@ -334,14 +326,7 @@ public class Logger {
                 Log.e(Const.LOGTAG, "logger writing error", e);
             }
             finally {
-                if (bos != null) {
-                    try {
-                        bos.close();
-                    }
-                    catch (IOException e) {
-                        Log.i(Const.LOGTAG, "logger close error");
-                    }
-                }
+                AndroidUtils.closeQuietly(bos);
             }
 
             Log.i(Const.LOGTAG, "logging time : " + (System.currentTimeMillis() - start) + "ms");

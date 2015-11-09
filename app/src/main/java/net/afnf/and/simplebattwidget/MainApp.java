@@ -6,12 +6,18 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.res.Configuration;
 
+import net.afnf.and.utils.Logger;
 import net.afnf.and.utils.MyUncaughtExceptionHandler;
 
 public class MainApp extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
+
+        // ロギング切り替え
+        Logger.setEnableLogging(BuildConfig.DEBUG);
+
         // UncaughtExceptionHandler初期化
         MyUncaughtExceptionHandler.init(this);
     }
